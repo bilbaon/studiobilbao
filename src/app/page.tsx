@@ -1,328 +1,370 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { FadeIn, StaggerContainer, StaggerItem } from "@/components/Animations";
+import { HeroCarousel } from "@/components/HeroCarousel";
+import { ContentRow } from "@/components/ContentRow";
+import {
+  CaseStudyCard,
+  ExperimentCard,
+  GalleryCard,
+  BlogCard,
+} from "@/components/ContentCards";
 
-const featuredProjects = [
+// Hero slides - Featured case studies
+const heroSlides = [
+  {
+    id: "personio-design-system",
+    title: "Scaling Design at Personio",
+    subtitle: "Enterprise Design System",
+    description: "Building a unified design language that enables 200+ designers and engineers to ship consistent, accessible experiences across HR workflows.",
+    category: "Case Study",
+    href: "/portfolio/enterprise-design-system",
+    gradient: "bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900",
+  },
+  {
+    id: "flexport-booking",
+    title: "Freight Booking Experience",
+    subtitle: "Flexport",
+    description: "Streamlining global logistics for e-commerce merchants. Reducing booking time from hours to minutes through intelligent automation.",
+    category: "Case Study",
+    href: "/portfolio/freight-booking-experience",
+    gradient: "bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900",
+  },
+  {
+    id: "generative-patterns",
+    title: "Generative Patterns",
+    subtitle: "Creative Coding Experiment",
+    description: "Exploring algorithmic art through code-driven visual systems. Mathematical beauty translated into infinite variations.",
+    category: "Experiment",
+    href: "/experiments/generative-patterns",
+    gradient: "bg-gradient-to-br from-rose-900 via-pink-900 to-slate-900",
+  },
+];
+
+// UX Case Studies
+const caseStudies = [
   {
     slug: "enterprise-design-system",
     title: "Enterprise Design System",
-    description: "Building a unified design language for complex B2B workflows",
-    category: "UX Design",
-    image: "/images/projects/design-system.jpg",
+    company: "Personio",
+    year: "2024",
+    category: "Design Systems",
+    gradient: "bg-gradient-to-br from-indigo-800 to-slate-900",
   },
   {
     slug: "freight-booking-experience",
     title: "Freight Booking Experience",
-    description: "Streamlining global logistics for e-commerce merchants",
+    company: "Flexport",
+    year: "2023",
     category: "Product Design",
-    image: "/images/projects/freight.jpg",
+    gradient: "bg-gradient-to-br from-emerald-800 to-slate-900",
   },
   {
     slug: "fitness-platform",
     title: "Fitness Platform",
-    description: "A modular system for personalized workout programs",
+    company: "Independent",
+    year: "2023",
     category: "UX Design",
-    image: "/images/projects/fitness.jpg",
+    gradient: "bg-gradient-to-br from-orange-800 to-slate-900",
+  },
+  {
+    slug: "hr-analytics",
+    title: "HR Analytics Dashboard",
+    company: "Personio",
+    year: "2024",
+    category: "Data Visualization",
+    gradient: "bg-gradient-to-br from-cyan-800 to-slate-900",
+  },
+  {
+    slug: "developer-portal",
+    title: "Developer Portal",
+    company: "Oracle",
+    year: "2022",
+    category: "Developer Experience",
+    gradient: "bg-gradient-to-br from-red-800 to-slate-900",
   },
 ];
 
-const creativeWork = [
+// Experiments
+const experiments = [
   {
-    href: "/woodworking",
-    title: "Woodworking",
-    description: "Handcrafted furniture and objects",
-    image: "/images/woodworking/featured.jpg",
+    slug: "generative-patterns",
+    title: "Generative Patterns",
+    category: "Creative Coding",
+    tags: ["p5.js", "Algorithms", "Art"],
+    gradient: "bg-gradient-to-br from-violet-600 to-indigo-900",
   },
   {
-    href: "/illustration",
-    title: "Illustration",
-    description: "Visual explorations and drawings",
-    image: "/images/illustration/featured.jpg",
+    slug: "micro-interactions",
+    title: "Micro-interaction Library",
+    category: "Motion Design",
+    tags: ["Framer Motion", "React"],
+    gradient: "bg-gradient-to-br from-pink-600 to-rose-900",
   },
   {
-    href: "/photography",
-    title: "Photography",
-    description: "Moments captured through the lens",
-    image: "/images/photography/featured.jpg",
+    slug: "data-sonification",
+    title: "Data Sonification",
+    category: "Sound Design",
+    tags: ["Web Audio", "Data Viz"],
+    gradient: "bg-gradient-to-br from-amber-600 to-orange-900",
+  },
+  {
+    slug: "typography-explorer",
+    title: "Variable Font Explorer",
+    category: "Typography",
+    tags: ["Variable Fonts", "CSS"],
+    gradient: "bg-gradient-to-br from-teal-600 to-cyan-900",
+  },
+];
+
+// Woodworking
+const woodworkingItems = [
+  {
+    id: "walnut-desk",
+    title: "Walnut Writing Desk",
+    subtitle: "Furniture",
+    gradient: "bg-gradient-to-br from-amber-800 to-stone-900",
+  },
+  {
+    id: "cherry-cabinet",
+    title: "Cherry Media Cabinet",
+    subtitle: "Furniture",
+    gradient: "bg-gradient-to-br from-rose-900 to-stone-900",
+  },
+  {
+    id: "oak-bookshelf",
+    title: "Oak Floating Shelves",
+    subtitle: "Shelving",
+    gradient: "bg-gradient-to-br from-yellow-800 to-stone-900",
+  },
+  {
+    id: "maple-cutting-board",
+    title: "Maple Cutting Board",
+    subtitle: "Kitchen",
+    gradient: "bg-gradient-to-br from-orange-800 to-stone-900",
+  },
+  {
+    id: "ash-stool",
+    title: "Ash Bar Stool",
+    subtitle: "Seating",
+    gradient: "bg-gradient-to-br from-stone-700 to-stone-900",
+  },
+];
+
+// Illustration
+const illustrationItems = [
+  {
+    id: "botanical-series",
+    title: "Botanical Series",
+    subtitle: "Ink & Watercolor",
+    gradient: "bg-gradient-to-br from-green-700 to-emerald-900",
+  },
+  {
+    id: "urban-sketches",
+    title: "Urban Sketches",
+    subtitle: "Pen & Ink",
+    gradient: "bg-gradient-to-br from-slate-600 to-zinc-900",
+  },
+  {
+    id: "portrait-studies",
+    title: "Portrait Studies",
+    subtitle: "Charcoal",
+    gradient: "bg-gradient-to-br from-stone-600 to-neutral-900",
+  },
+  {
+    id: "abstract-forms",
+    title: "Abstract Forms",
+    subtitle: "Digital",
+    gradient: "bg-gradient-to-br from-purple-700 to-violet-900",
+  },
+];
+
+// Photography
+const photographyItems = [
+  {
+    id: "street-tokyo",
+    title: "Tokyo Streets",
+    subtitle: "Street Photography",
+    gradient: "bg-gradient-to-br from-red-800 to-slate-900",
+  },
+  {
+    id: "landscape-california",
+    title: "California Coast",
+    subtitle: "Landscape",
+    gradient: "bg-gradient-to-br from-blue-700 to-cyan-900",
+  },
+  {
+    id: "architecture-brutalism",
+    title: "Brutalist Forms",
+    subtitle: "Architecture",
+    gradient: "bg-gradient-to-br from-gray-600 to-zinc-900",
+  },
+  {
+    id: "travel-lisbon",
+    title: "Lisbon Light",
+    subtitle: "Travel",
+    gradient: "bg-gradient-to-br from-amber-600 to-orange-900",
+  },
+  {
+    id: "street-nyc",
+    title: "NYC Underground",
+    subtitle: "Street Photography",
+    gradient: "bg-gradient-to-br from-zinc-700 to-slate-900",
+  },
+];
+
+// Blog posts
+const blogPosts = [
+  {
+    slug: "design-systems-at-scale",
+    title: "Building Design Systems at Scale",
+    excerpt: "Lessons learned from creating and maintaining design systems for enterprise products.",
+    date: "Jan 2026",
+    readTime: "8 min",
+    category: "Design",
+    gradient: "bg-gradient-to-br from-indigo-700 to-slate-800",
+  },
+  {
+    slug: "craft-in-digital-age",
+    title: "Finding Craft in the Digital Age",
+    excerpt: "Why I started woodworking and what it taught me about patience and intentional design.",
+    date: "Dec 2025",
+    readTime: "6 min",
+    category: "Craft",
+    gradient: "bg-gradient-to-br from-amber-700 to-stone-800",
+  },
+  {
+    slug: "prototyping-with-code",
+    title: "Prototyping with Code",
+    excerpt: "How learning to code transformed my design process and improved collaboration.",
+    date: "Nov 2025",
+    readTime: "5 min",
+    category: "Process",
+    gradient: "bg-gradient-to-br from-emerald-700 to-slate-800",
+  },
+  {
+    slug: "ux-research-remote",
+    title: "Remote UX Research That Works",
+    excerpt: "Strategies for conducting effective user research in distributed teams.",
+    date: "Oct 2025",
+    readTime: "7 min",
+    category: "Research",
+    gradient: "bg-gradient-to-br from-violet-700 to-slate-800",
   },
 ];
 
 export default function Home() {
   return (
-    <div className="pt-16">
-      {/* Hero Section */}
-      <section className="min-h-[90vh] flex items-center">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-24">
-          <FadeIn>
-            <p className="text-muted text-sm font-medium tracking-wide uppercase mb-6">
-              Principal Product Designer
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.1] max-w-4xl text-balance">
-              Crafting intuitive experiences for high-impact technology
-            </h1>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <p className="mt-8 text-lg md:text-xl text-muted max-w-2xl leading-relaxed">
-              I help teams build enterprise tools that unlock productivity through
-              thoughtful design and validation. Currently at Personio, previously
-              at Flexport and Oracle.
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.3}>
-            <div className="mt-12 flex flex-wrap gap-4">
-              <Link
-                href="/portfolio"
-                className="inline-flex items-center justify-center h-12 px-8 bg-foreground text-background font-medium rounded-full hover:opacity-90 transition-opacity"
-              >
-                View Portfolio
-              </Link>
-              <Link
-                href="/experiments"
-                className="inline-flex items-center justify-center h-12 px-8 border border-border font-medium rounded-full hover:bg-card-hover transition-colors"
-              >
-                Experiments
-              </Link>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
+    <div className="-mt-16">
+      {/* Hero Carousel */}
+      <HeroCarousel slides={heroSlides} autoAdvance interval={8000} />
 
-      {/* Featured Work */}
-      <section className="py-24 border-t border-border">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <FadeIn>
-            <div className="flex items-end justify-between mb-16">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-medium tracking-tight">
-                  Selected Work
-                </h2>
-                <p className="mt-4 text-muted max-w-xl">
-                  Enterprise UX design focused on making complex systems accessible
-                </p>
-              </div>
-              <Link
-                href="/portfolio"
-                className="hidden md:inline-flex text-sm font-medium underline-animated"
-              >
-                View all projects
-              </Link>
-            </div>
-          </FadeIn>
+      {/* Content Rows */}
+      <div className="py-12 space-y-12">
+        {/* UX Case Studies */}
+        <ContentRow title="UX Case Studies" href="/portfolio">
+          {caseStudies.map((study) => (
+            <CaseStudyCard
+              key={study.slug}
+              href={`/portfolio/${study.slug}`}
+              title={study.title}
+              company={study.company}
+              year={study.year}
+              category={study.category}
+              gradient={study.gradient}
+            />
+          ))}
+        </ContentRow>
 
-          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProjects.map((project) => (
-              <StaggerItem key={project.slug}>
-                <Link
-                  href={`/portfolio/${project.slug}`}
-                  className="group block"
-                >
-                  <div className="aspect-project bg-card rounded-lg overflow-hidden border border-border group-hover:border-muted transition-colors">
-                    <div className="w-full h-full bg-gradient-to-br from-card to-card-hover flex items-center justify-center">
-                      <span className="text-muted text-sm">Project Image</span>
-                    </div>
-                  </div>
-                  <div className="mt-6">
-                    <p className="text-xs text-muted uppercase tracking-wide mb-2">
-                      {project.category}
-                    </p>
-                    <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
-                      {project.title}
-                    </h3>
-                    <p className="mt-2 text-muted text-sm">
-                      {project.description}
-                    </p>
-                  </div>
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+        {/* Experiments */}
+        <ContentRow title="Experiments" href="/experiments">
+          {experiments.map((exp) => (
+            <ExperimentCard
+              key={exp.slug}
+              href={`/experiments/${exp.slug}`}
+              title={exp.title}
+              category={exp.category}
+              tags={exp.tags}
+              gradient={exp.gradient}
+            />
+          ))}
+        </ContentRow>
 
-          <div className="mt-12 md:hidden">
-            <Link
-              href="/portfolio"
-              className="text-sm font-medium underline-animated"
-            >
-              View all projects
-            </Link>
-          </div>
-        </div>
-      </section>
+        {/* Woodworking */}
+        <ContentRow title="Woodworking" href="/woodworking">
+          {woodworkingItems.map((item) => (
+            <GalleryCard
+              key={item.id}
+              href={`/woodworking#${item.id}`}
+              title={item.title}
+              subtitle={item.subtitle}
+              gradient={item.gradient}
+              aspectRatio="portrait"
+            />
+          ))}
+        </ContentRow>
 
-      {/* Creative Explorations */}
-      <section className="py-24 border-t border-border bg-card">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <FadeIn>
-            <div className="mb-16">
-              <h2 className="text-3xl md:text-4xl font-medium tracking-tight">
-                Creative Explorations
-              </h2>
-              <p className="mt-4 text-muted max-w-xl">
-                Beyond screens — exploring craft, illustration, and photography
-              </p>
-            </div>
-          </FadeIn>
+        {/* Illustration */}
+        <ContentRow title="Illustration" href="/illustration">
+          {illustrationItems.map((item) => (
+            <GalleryCard
+              key={item.id}
+              href={`/illustration#${item.id}`}
+              title={item.title}
+              subtitle={item.subtitle}
+              gradient={item.gradient}
+              aspectRatio="square"
+            />
+          ))}
+        </ContentRow>
 
-          <StaggerContainer className="grid md:grid-cols-3 gap-8">
-            {creativeWork.map((item) => (
-              <StaggerItem key={item.href}>
-                <Link href={item.href} className="group block">
-                  <div className="aspect-square bg-background rounded-lg overflow-hidden border border-border group-hover:border-muted transition-colors">
-                    <div className="w-full h-full bg-gradient-to-br from-background to-card-hover flex items-center justify-center">
-                      <span className="text-muted text-sm">{item.title}</span>
-                    </div>
-                  </div>
-                  <div className="mt-6">
-                    <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-muted text-sm">
-                      {item.description}
-                    </p>
-                  </div>
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
+        {/* Photography */}
+        <ContentRow title="Photography" href="/photography">
+          {photographyItems.map((item) => (
+            <GalleryCard
+              key={item.id}
+              href={`/photography#${item.id}`}
+              title={item.title}
+              subtitle={item.subtitle}
+              gradient={item.gradient}
+              aspectRatio="landscape"
+            />
+          ))}
+        </ContentRow>
 
-      {/* About Teaser */}
-      <section className="py-24 border-t border-border">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <FadeIn>
-              <div>
-                <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
-                  Thoughtful design, tangible impact
-                </h2>
-                <div className="space-y-4 text-muted">
-                  <p>
-                    With over a decade of experience in UX design, I&apos;ve helped
-                    build products used by millions at companies like Personio,
-                    Flexport, Oracle, and Autodesk.
-                  </p>
-                  <p>
-                    I believe the best design emerges from deep understanding — of
-                    users, business constraints, and the craft itself. Whether it&apos;s
-                    a complex enterprise workflow or a handcrafted wooden object,
-                    I approach every project with the same attention to detail.
-                  </p>
-                </div>
-                <div className="mt-8 flex flex-wrap gap-6 text-sm">
-                  <div>
-                    <p className="font-medium text-foreground">Currently</p>
-                    <p className="text-muted">Principal Designer at Personio</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">Previously</p>
-                    <p className="text-muted">Flexport, Oracle, Autodesk</p>
-                  </div>
-                </div>
-              </div>
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <div className="aspect-square bg-card rounded-lg border border-border flex items-center justify-center">
-                <span className="text-muted text-sm">Photo</span>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
+        {/* Blog / Writing */}
+        <ContentRow title="Writing" href="/blog">
+          {blogPosts.map((post) => (
+            <BlogCard
+              key={post.slug}
+              href={`/blog/${post.slug}`}
+              title={post.title}
+              excerpt={post.excerpt}
+              date={post.date}
+              readTime={post.readTime}
+              category={post.category}
+              gradient={post.gradient}
+            />
+          ))}
+        </ContentRow>
+      </div>
 
-      {/* Blog Preview */}
-      <section className="py-24 border-t border-border bg-card">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <FadeIn>
-            <div className="flex items-end justify-between mb-16">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-medium tracking-tight">
-                  Writing
-                </h2>
-                <p className="mt-4 text-muted max-w-xl">
-                  Thoughts on design, craft, and building products
-                </p>
-              </div>
-              <Link
-                href="/blog"
-                className="hidden md:inline-flex text-sm font-medium underline-animated"
-              >
-                View all posts
-              </Link>
-            </div>
-          </FadeIn>
-
-          <StaggerContainer className="grid md:grid-cols-2 gap-8">
-            <StaggerItem>
-              <Link href="/blog/design-systems-at-scale" className="group block p-6 bg-background rounded-lg border border-border hover:border-muted transition-colors">
-                <p className="text-xs text-muted uppercase tracking-wide mb-3">
-                  Design Systems
-                </p>
-                <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
-                  Building Design Systems at Scale
-                </h3>
-                <p className="mt-3 text-muted text-sm line-clamp-2">
-                  Lessons learned from creating and maintaining design systems
-                  for enterprise products.
-                </p>
-                <p className="mt-4 text-xs text-muted">
-                  January 2026
-                </p>
-              </Link>
-            </StaggerItem>
-            <StaggerItem>
-              <Link href="/blog/craft-in-digital-age" className="group block p-6 bg-background rounded-lg border border-border hover:border-muted transition-colors">
-                <p className="text-xs text-muted uppercase tracking-wide mb-3">
-                  Craft
-                </p>
-                <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
-                  Finding Craft in the Digital Age
-                </h3>
-                <p className="mt-3 text-muted text-sm line-clamp-2">
-                  Why I started woodworking and what it taught me about
-                  patience and intentional design.
-                </p>
-                <p className="mt-4 text-xs text-muted">
-                  December 2025
-                </p>
-              </Link>
-            </StaggerItem>
-          </StaggerContainer>
-
-          <div className="mt-12 md:hidden">
-            <Link
-              href="/blog"
-              className="text-sm font-medium underline-animated"
-            >
-              View all posts
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact CTA */}
+      {/* Footer CTA */}
       <section className="py-24 border-t border-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight">
-              Let&apos;s work together
-            </h2>
-            <p className="mt-4 text-muted max-w-md mx-auto">
-              I&apos;m always interested in hearing about new projects and opportunities.
-            </p>
-            <div className="mt-8">
-              <a
-                href="mailto:hello@nathanbilbao.com"
-                className="inline-flex items-center justify-center h-12 px-8 bg-foreground text-background font-medium rounded-full hover:opacity-90 transition-opacity"
-              >
-                Get in touch
-              </a>
-            </div>
-          </FadeIn>
+          <h2 className="text-3xl md:text-4xl font-medium tracking-tight">
+            Let&apos;s work together
+          </h2>
+          <p className="mt-4 text-muted max-w-md mx-auto">
+            I&apos;m always interested in hearing about new projects and opportunities.
+          </p>
+          <div className="mt-8">
+            <a
+              href="mailto:hello@nathanbilbao.com"
+              className="inline-flex items-center justify-center h-12 px-8 bg-foreground text-background font-medium rounded-full hover:opacity-90 transition-opacity"
+            >
+              Get in touch
+            </a>
+          </div>
         </div>
       </section>
     </div>
